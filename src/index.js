@@ -57,6 +57,7 @@ class App extends Component {
 
     function onPlayerReady(event) {
       player.seekTo(self.state.loopStart);
+      self.setState({videoLength: player.getDuration()})
     }
 
     function onPlayerStateChange(event) {
@@ -102,9 +103,6 @@ class App extends Component {
       loopStart: event[0],
       loopEnd: event[1]
     })
-
-    console.log(this.videoLength());
-
     // just set values of slider to seconds
     // for the tooltip, just take slider's current seconds value and display HH:MM:SS
   }
@@ -116,7 +114,7 @@ class App extends Component {
       <div>
         <VideoDetail video={this.state.selectedVideo} />
         <div className="slider-container col-md-8">
-          <Slider range min={0} max={55} defaultValue={[0, 0]} onChange={event => this.setLoopParams(event)}/>
+          <Slider range min={0} max={this.state.videoLength} defaultValue={[0, 0]} onChange={event => this.setLoopParams(event)}/>
         </div>
         <SearchBar onSearchTermChange={videoSearch} />
         <VideoList
