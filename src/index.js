@@ -19,11 +19,12 @@ class App extends Component {
     this.state = {
       videos: [],
       selectedVideo: null,
+      videoLength: null,
       loopStart: 30,
       loopEnd: 34
     }
 
-    this.videoSearch('surfboards')
+    this.videoSearch('super smash bros melee')
     this.initIframeAPI();
     this.initIframeFunctions();
   }
@@ -84,6 +85,30 @@ class App extends Component {
     })
   }
 
+  videoLength() {
+    var videoMins, videoSecs, videoLength;
+
+    videoMins = Math.floor(player.getDuration() / 60).toString()
+    videoSecs = Math.floor(player.getDuration() % 60).toString()
+    if (videoSecs.toString().length === 1) {
+      videoSecs = "0" + videoSecs;
+    }
+    videoLength = videoMins + ":" + videoSecs
+    return videoLength;
+  }
+
+  setLoopParams(event) {
+    this.setState({
+      loopStart: event[0],
+      loopEnd: event[1]
+    })
+
+    console.log(this.videoLength());
+
+    // just set values of slider to seconds
+    // for the tooltip, just take slider's current seconds value and display HH:MM:SS
+  }
+
   render() {
     const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 500)
 
@@ -91,7 +116,7 @@ class App extends Component {
       <div>
         <VideoDetail video={this.state.selectedVideo} />
         <div className="slider-container col-md-8">
-          <Slider range defaultValue={[20, 50]} />
+          <Slider range min={0} max={55} defaultValue={[0, 0]} onChange={event => this.setLoopParams(event)}/>
         </div>
         <SearchBar onSearchTermChange={videoSearch} />
         <VideoList
