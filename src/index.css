@@ -1,5 +1,40 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+.search-bar {
+  text-align: center;
 }
+
+.search-bar input {
+  width: 50%;
+}
+
+.video-item img {
+  max-width: 64px;
+}
+
+.video-detail {
+  padding: 20px;
+  margin: auto;
+}
+
+.details {
+  margin: 15px 0px 20px 0px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.search-results {
+  margin: auto;
+  padding: 20px;
+}
+
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  background-color: #eee;
+}
+
+/* .list-group {
+  margin: auto;
+} */
