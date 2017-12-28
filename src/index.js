@@ -86,7 +86,7 @@ class App extends Component {
     })
   }
 
-  videoLength() {
+  parseVideoLength() {
     var videoMins, videoSecs, videoLength;
 
     videoMins = Math.floor(player.getDuration() / 60).toString()
@@ -107,6 +107,18 @@ class App extends Component {
     // for the tooltip, just take slider's current seconds value and display HH:MM:SS
   }
 
+  tooltipFormatter(value) {
+    var videoMins, videoSecs, videoLength;
+
+    videoMins = Math.floor(value / 60).toString()
+    videoSecs = Math.floor(value % 60).toString()
+    if (videoSecs.toString().length === 1) {
+      videoSecs = "0" + videoSecs;
+    }
+    videoLength = videoMins + ":" + videoSecs
+    return videoLength;
+  }
+
   render() {
     const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 500)
 
@@ -114,7 +126,13 @@ class App extends Component {
       <div>
         <VideoDetail video={this.state.selectedVideo} />
         <div className="slider-container col-md-8">
-          <Slider range min={0} max={this.state.videoLength} defaultValue={[0, 0]} onChange={event => this.setLoopParams(event)}/>
+          <Slider
+            range
+            min={0}
+            max={this.state.videoLength}
+            defaultValue={[0, 0]}
+            onChange={event => this.setLoopParams(event)}
+            tipFormatter={this.tooltipFormatter}/>
         </div>
         <SearchBar onSearchTermChange={videoSearch} />
         <VideoList
