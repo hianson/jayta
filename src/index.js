@@ -81,21 +81,11 @@ class App extends Component {
   }
 
   changeSelectedVideo(selectedVideo) {
+    // set state to new selectedVideo, then load the new video stored in state
+    // need to change the state of videoLength to the newly selectedVideo
     this.setState({ selectedVideo }, function() {
       player.loadVideoById(this.state.selectedVideo.id.videoId, 0, "default")
     })
-  }
-
-  parseVideoLength() {
-    var videoMins, videoSecs, videoLength;
-
-    videoMins = Math.floor(player.getDuration() / 60).toString()
-    videoSecs = Math.floor(player.getDuration() % 60).toString()
-    if (videoSecs.toString().length === 1) {
-      videoSecs = "0" + videoSecs;
-    }
-    videoLength = videoMins + ":" + videoSecs
-    return videoLength;
   }
 
   setLoopParams(event) {
@@ -103,11 +93,10 @@ class App extends Component {
       loopStart: event[0],
       loopEnd: event[1]
     })
-    // just set values of slider to seconds
-    // for the tooltip, just take slider's current seconds value and display HH:MM:SS
   }
 
   tooltipFormatter(value) {
+    // need to take into account hour long vids(?)... unless youtube shows timestamp as 123:59
     var videoMins, videoSecs, videoLength;
 
     videoMins = Math.floor(value / 60).toString()
