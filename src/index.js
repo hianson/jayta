@@ -76,6 +76,12 @@ class App extends Component {
     })
   }
 
+  changeSelectedVideo(selectedVideo) {
+    this.setState({ selectedVideo }, function() {
+      player.loadVideoById(this.state.selectedVideo.id.videoId, 0, "default")
+    })
+  }
+
   render() {
     const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 500)
 
@@ -84,7 +90,7 @@ class App extends Component {
         <VideoDetail video={this.state.selectedVideo} />
         <SearchBar onSearchTermChange={videoSearch} />
         <VideoList
-          onVideoSelect={selectedVideo => this.setState({selectedVideo}) }
+          onVideoSelect={selectedVideo => this.changeSelectedVideo(selectedVideo)}
           videos={this.state.videos} />
       </div>
     );
