@@ -8,6 +8,7 @@ import YTSearch from 'youtube-api-search';
 import _ from 'lodash';
 
 const API_KEY = 'AIzaSyDS7Tzkft4cV7YtXYdbdNTKi6enI_CtIHM';
+var player;
 
 class App extends Component {
   constructor(props) {
@@ -15,10 +16,55 @@ class App extends Component {
 
     this.state = {
       videos: [],
-      selectedVideo: null
+      selectedVideo: null,
+      loopStart: 30,
+      loopEnd: 34
     }
 
     this.videoSearch('surfboards')
+    this.initIframeAPI();
+    this.initIframeFunctions();
+  }
+
+  initIframeAPI() {
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/player_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
+
+  initIframeFunctions() {
+    var self = this;
+    var YT;
+
+    window.onYouTubePlayerAPIReady = function() {
+      YT = window.YT;
+      player = new YT.Player('ytplayer', {
+        videoId: self.state.selectedVideo.id.videoId,
+        playerVars: {
+          'rel': 0,
+          'showinfo': 0
+        },
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function onPlayerReady(event) {
+      player.seekTo(self.state.loopStart);
+    }
+
+    function onPlayerStateChange(event) {
+      if (player.getPlayerState() === 1) {
+        setInterval(function() {
+          if (player.getCurrentTime() < self.state.loopStart || player.getCurrentTime() > self.state.loopEnd) {
+            player.seekTo(self.state.loopStart);
+          }
+        }, 1000)
+      }
+    }
   }
 
   videoSearch(term) {
@@ -30,6 +76,12 @@ class App extends Component {
     })
   }
 
+  changeSelectedVideo(selectedVideo) {
+    this.setState({ selectedVideo }, function() {
+      player.loadVideoById(this.state.selectedVideo.id.videoId, 0, "default")
+    })
+  }
+
   render() {
     const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 500)
 
@@ -38,7 +90,7 @@ class App extends Component {
         <VideoDetail video={this.state.selectedVideo} />
         <SearchBar onSearchTermChange={videoSearch} />
         <VideoList
-          onVideoSelect={selectedVideo => this.setState({selectedVideo}) }
+          onVideoSelect={selectedVideo => this.changeSelectedVideo(selectedVideo)}
           videos={this.state.videos} />
       </div>
     );
