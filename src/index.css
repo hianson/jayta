@@ -1,21 +1,30 @@
 .search-bar {
-  margin: 20px;
   text-align: center;
 }
 
 .search-bar input {
-  width: 75%;
+  width: 50%;
 }
 
 .video-item img {
   max-width: 64px;
 }
 
-.video-detail .details {
-  margin-top: 10px;
+.video-detail {
+  padding: 20px;
+  margin: auto;
+}
+
+.details {
+  margin: 15px 0px 20px 0px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
+}
+
+.search-results {
+  margin: auto;
+  padding: 20px;
 }
 
 .list-group-item {
@@ -25,3 +34,7 @@
 .list-group-item:hover {
   background-color: #eee;
 }
+
+/* .list-group {
+  margin: auto;
+} */
