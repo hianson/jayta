@@ -5,6 +5,8 @@ import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
 import YTSearch from 'youtube-api-search';
+import { Slider } from 'antd';
+import 'antd/dist/antd.css';
 import _ from 'lodash';
 
 const API_KEY = 'AIzaSyDS7Tzkft4cV7YtXYdbdNTKi6enI_CtIHM';
@@ -88,6 +90,9 @@ class App extends Component {
     return (
       <div>
         <VideoDetail video={this.state.selectedVideo} />
+        <div className="slider-container col-md-8">
+          <Slider range defaultValue={[20, 50]} />
+        </div>
         <SearchBar onSearchTermChange={videoSearch} />
         <VideoList
           onVideoSelect={selectedVideo => this.changeSelectedVideo(selectedVideo)}
