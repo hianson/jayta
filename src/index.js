@@ -24,7 +24,7 @@ class App extends Component {
       loopEnd: 34
     }
 
-    this.videoSearch('super smash bros melee')
+    this.videoSearch('')
     this.initIframeAPI();
     this.initIframeFunctions();
   }
