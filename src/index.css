@@ -12,19 +12,7 @@
 }
 
 .video-detail {
-  /* margin: auto; */
-}
-
-#video-container {
-  /* width: 70%; */
-  /* margin: auto; */
-}
-
-#ytplayer {
-  width: 70%;
-}
-
-#root {
+  margin: auto;
 }
 
 #search-container {
@@ -34,23 +22,6 @@
 
 #description-container {
   background-color: white;
-}
-
-.controls {
-  text-align: center;
-}
-
-.controls button {
-  outline: none;
-  margin: 20px;
-}
-
-.resize-video-btn {
-  color: white;
-  background-color: black;
-  border: 1px solid gray;
-  border-radius: 3px;
-  outline: none;
 }
 
 .details {

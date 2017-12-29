@@ -21,11 +21,11 @@ class App extends Component {
       videos: [],
       selectedVideo: null,
       videoLength: null,
-      loopStart: 30,
-      loopEnd: 34
+      loopStart: 221,
+      loopEnd: 228
     }
 
-    this.videoSearch('')
+    this.videoSearch('jimi hendrix red house live')
     this.initIframeAPI();
     this.initIframeFunctions();
   }
@@ -125,28 +125,13 @@ class App extends Component {
     return videoLength;
   }
 
-  theaterMode() {
-    var playa = document.getElementById("video-container");
-    var playaStyle = window.getComputedStyle(playa);
-    var playaWidth = parseInt(playaStyle.getPropertyValue('width'), 10);
-    var windoWidth = window.innerWidth;
-
-    if (playaWidth / windoWidth > .95) {
-      playa.style.width = "70%";
-    } else if (playaWidth / windoWidth > 0.75) {
-      playa.style.width = "100%";
-    } else if (playaWidth / windoWidth < .75) {
-      playa.style.width = "85%";
-    }
-  }
-
   render() {
     const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 500)
 
     return (
       <div>
         <VideoContainer video={this.state.selectedVideo} />
-        <div className="slider-container col-md-8">
+        <div className="slider-container col-md-12">
           <Slider
             range
             min={0}
@@ -154,9 +139,6 @@ class App extends Component {
             defaultValue={[0, 0]}
             onAfterChange={event => this.setLoopParams(event)}
             tipFormatter={this.tooltipFormatter}/>
-        </div>
-        <div className="controls">
-          <button onClick={this.theaterMode} className="resize-video-btn">resize</button>
         </div>
         <div id="description-container">
           <VideoDescription video={this.state.selectedVideo} />
