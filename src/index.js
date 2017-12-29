@@ -91,7 +91,8 @@ class App extends Component {
   setLoopParams(event) {
     this.setState({
       loopStart: event[0],
-      loopEnd: event[1]
+      loopEnd: event[1],
+      videoLength: player.getDuration()
     })
   }
 
