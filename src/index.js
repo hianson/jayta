@@ -9,7 +9,7 @@ import { Slider } from 'antd';
 import 'antd/dist/antd.css';
 import _ from 'lodash';
 
-const API_KEY = 'AIzaSyDS7Tzkft4cV7YtXYdbdNTKi6enI_CtIHM';
+const API_KEY = 'AIzaSyAhWFg94Jk2Ou8MpmQMxBAg7iIRXCqAHmA';
 var player;
 
 class App extends Component {
