@@ -21,8 +21,8 @@ class App extends Component {
       videos: [],
       selectedVideo: null,
       videoLength: null,
-      loopStart: 221,
-      loopEnd: 228
+      loopStart: 120,
+      loopEnd: 126
     }
 
     this.videoSearch('jimi hendrix red house live')
@@ -73,7 +73,7 @@ class App extends Component {
           if (player.getCurrentTime() < self.state.loopStart || player.getCurrentTime() > self.state.loopEnd) {
             player.seekTo(self.state.loopStart);
           }
-        }, 1000)
+        }, 800)
       }
     }
   }
@@ -136,7 +136,7 @@ class App extends Component {
             range
             min={0}
             max={this.state.videoLength}
-            defaultValue={[0, 0]}
+            defaultValue={[221, 228]}
             onAfterChange={event => this.setLoopParams(event)}
             tipFormatter={this.tooltipFormatter}/>
         </div>
