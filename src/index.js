@@ -136,7 +136,7 @@ class App extends Component {
             range
             min={0}
             max={this.state.videoLength}
-            defaultValue={[221, 228]}
+            defaultValue={[0, 0]}
             onAfterChange={event => this.setLoopParams(event)}
             tipFormatter={this.tooltipFormatter}/>
         </div>
