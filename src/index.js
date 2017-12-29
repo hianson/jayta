@@ -121,7 +121,7 @@ class App extends Component {
             min={0}
             max={this.state.videoLength}
             defaultValue={[0, 0]}
-            onChange={event => this.setLoopParams(event)}
+            onAfterChange={event => this.setLoopParams(event)}
             tipFormatter={this.tooltipFormatter}/>
         </div>
         <SearchBar onSearchTermChange={videoSearch} />
