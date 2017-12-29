@@ -4,6 +4,7 @@
 
 .search-bar input {
   width: 35%;
+  margin: 20px;
 }
 
 .video-item img {
@@ -11,8 +12,38 @@
 }
 
 .video-detail {
-  padding: 20px;
   margin: auto;
+}
+
+#video-container {
+  width: 70%;
+}
+
+#root {
+  background-color: black;
+}
+
+#search-container {
+  padding: 20px;
+  background-color: white;
+}
+
+.controls {
+  text-align: center;
+
+}
+
+.controls button {
+  outline: none;
+  margin: 20px;
+}
+
+.resize-video-btn {
+  color: white;
+  background-color: black;
+  border: 1px solid gray;
+  border-radius: 3px;
+  outline: none;
 }
 
 .details {
@@ -20,11 +51,11 @@
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  background-color: white;
 }
 
 .search-results {
   margin: auto;
-  padding: 20px;
 }
 
 .list-group-item {

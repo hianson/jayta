@@ -44,15 +44,15 @@ class App extends Component {
       YT = window.YT;
 
       if (!self.state.selectedVideo) {
-        console.log('Oops - just a slight error with iFrame which fixes with quick quick quick reload.')
+        console.log('Oops - silly error which fixes with quick reload.')
         window.location.reload();
       }
 
       player = new YT.Player('ytplayer', {
         videoId: self.state.selectedVideo.id.videoId,
         playerVars: {
-          'rel': 0,
-          'showinfo': 0
+          rel: 0,
+          showinfo: 0
         },
         events: {
           'onReady': onPlayerReady,
@@ -124,6 +124,21 @@ class App extends Component {
     return videoLength;
   }
 
+  theaterMode() {
+    var playa = document.getElementById("video-container");
+    var playaStyle = window.getComputedStyle(playa);
+    var playaWidth = parseInt(playaStyle.getPropertyValue('width'), 10);
+    var windoWidth = window.innerWidth;
+
+    if (playaWidth / windoWidth > .95) {
+      playa.style.width = "70%";
+    } else if (playaWidth / windoWidth > 0.75) {
+      playa.style.width = "100%";
+    } else if (playaWidth / windoWidth < .75) {
+      playa.style.width = "85%";
+    }
+  }
+
   render() {
     const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 500)
 
@@ -139,10 +154,15 @@ class App extends Component {
             onAfterChange={event => this.setLoopParams(event)}
             tipFormatter={this.tooltipFormatter}/>
         </div>
-        <SearchBar onSearchTermChange={videoSearch} />
-        <VideoList
-          onVideoSelect={selectedVideo => this.changeSelectedVideo(selectedVideo)}
-          videos={this.state.videos} />
+        <div className="controls">
+          <button onClick={this.theaterMode} className="resize-video-btn">resize</button>
+        </div>
+        <div id="search-container">
+          <SearchBar onSearchTermChange={videoSearch} />
+          <VideoList
+            onVideoSelect={selectedVideo => this.changeSelectedVideo(selectedVideo)}
+            videos={this.state.videos} />
+        </div>
       </div>
     );
   }
