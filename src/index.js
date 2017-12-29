@@ -97,15 +97,26 @@ class App extends Component {
   }
 
   tooltipFormatter(value) {
-    // need to take into account hour long vids(?)... unless youtube shows timestamp as 123:59
-    var videoMins, videoSecs, videoLength;
+    var videoHours, videoMins, videoSecs, videoLength;
 
-    videoMins = Math.floor(value / 60).toString()
-    videoSecs = Math.floor(value % 60).toString()
-    if (videoSecs.toString().length === 1) {
-      videoSecs = "0" + videoSecs;
+    videoHours = Math.floor(value / 3600)
+    value -= (videoHours * 3600)
+    videoMins = Math.floor(value / 60)
+    value -= (videoMins * 60)
+    videoSecs = Math.floor(value)
+
+    if (videoSecs < 10) {
+      videoSecs = "0" + videoSecs
     }
-    videoLength = videoMins + ":" + videoSecs
+
+    if (videoHours > 0) {
+      if (videoMins < 10) {
+        videoMins = "0" + videoMins
+      }
+      videoLength = videoHours + ":" + videoMins + ":" + videoSecs;
+    } else {
+      videoLength = videoMins + ":" + videoSecs;
+    }
     return videoLength;
   }
 
