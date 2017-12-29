@@ -2,7 +2,7 @@ import React from 'react';
 
 const VideoDescription = ({video}) => {
   if (!video) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   return (
