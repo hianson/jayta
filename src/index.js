@@ -42,6 +42,12 @@ class App extends Component {
 
     window.onYouTubePlayerAPIReady = function() {
       YT = window.YT;
+
+      if (!self.state.selectedVideo) {
+        console.log('Oops - just a slight error with iFrame which fixes with quick quick quick reload.')
+        window.location.reload();
+      }
+
       player = new YT.Player('ytplayer', {
         videoId: self.state.selectedVideo.id.videoId,
         playerVars: {
@@ -81,8 +87,6 @@ class App extends Component {
   }
 
   changeSelectedVideo(selectedVideo) {
-    // set state to new selectedVideo, then load the new video stored in state
-    // need to change the state of videoLength to the newly selectedVideo
     this.setState({ selectedVideo }, function() {
       player.loadVideoById(this.state.selectedVideo.id.videoId, 0, "default")
     })
