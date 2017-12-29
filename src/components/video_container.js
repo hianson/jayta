@@ -1,6 +1,6 @@
 import React from 'react';
 
-const VideoDetail = ({video}) => {
+const VideoContainer = ({video}) => {
   if (!video) {
     return <div>Loading...</div>;
   }
@@ -12,12 +12,8 @@ const VideoDetail = ({video}) => {
       <div className="embed-responsive embed-responsive-16by9">
         <div id="ytplayer"></div>
       </div>
-      <div className="details">
-        <div>{video.snippet.title}</div>
-        <div>{video.snippet.description}</div>
-      </div>
     </div>
   )
 }
 
-export default VideoDetail;
+export default VideoContainer;

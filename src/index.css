@@ -12,15 +12,19 @@
 }
 
 .video-detail {
-  margin: auto;
+  /* margin: auto; */
 }
 
 #video-container {
+  /* width: 70%; */
+  /* margin: auto; */
+}
+
+#ytplayer {
   width: 70%;
 }
 
 #root {
-  background-color: black;
 }
 
 #search-container {
@@ -28,9 +32,12 @@
   background-color: white;
 }
 
+#description-container {
+  background-color: white;
+}
+
 .controls {
   text-align: center;
-
 }
 
 .controls button {
@@ -47,11 +54,11 @@
 }
 
 .details {
-  margin: 15px 0px 0px 0px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: white;
+  width: 70%;
   /* visibility: hidden; */
 }
 

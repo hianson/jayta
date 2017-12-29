@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
-import VideoDetail from './components/video_detail';
+import VideoContainer from './components/video_container';
+import VideoDescription from './components/video_description';
 import YTSearch from 'youtube-api-search';
 import { Slider } from 'antd';
 import 'antd/dist/antd.css';
@@ -144,7 +145,7 @@ class App extends Component {
 
     return (
       <div>
-        <VideoDetail video={this.state.selectedVideo} />
+        <VideoContainer video={this.state.selectedVideo} />
         <div className="slider-container col-md-8">
           <Slider
             range
@@ -156,6 +157,9 @@ class App extends Component {
         </div>
         <div className="controls">
           <button onClick={this.theaterMode} className="resize-video-btn">resize</button>
+        </div>
+        <div id="description-container">
+          <VideoDescription video={this.state.selectedVideo} />
         </div>
         <div id="search-container">
           <SearchBar onSearchTermChange={videoSearch} />
