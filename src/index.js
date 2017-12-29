@@ -5,6 +5,8 @@ import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
 import YTSearch from 'youtube-api-search';
+import { Slider } from 'antd';
+import 'antd/dist/antd.css';
 import _ from 'lodash';
 
 const API_KEY = 'AIzaSyDS7Tzkft4cV7YtXYdbdNTKi6enI_CtIHM';
@@ -17,11 +19,12 @@ class App extends Component {
     this.state = {
       videos: [],
       selectedVideo: null,
+      videoLength: null,
       loopStart: 30,
       loopEnd: 34
     }
 
-    this.videoSearch('surfboards')
+    this.videoSearch('super smash bros melee')
     this.initIframeAPI();
     this.initIframeFunctions();
   }
@@ -54,6 +57,7 @@ class App extends Component {
 
     function onPlayerReady(event) {
       player.seekTo(self.state.loopStart);
+      self.setState({videoLength: player.getDuration()})
     }
 
     function onPlayerStateChange(event) {
@@ -77,9 +81,32 @@ class App extends Component {
   }
 
   changeSelectedVideo(selectedVideo) {
+    // set state to new selectedVideo, then load the new video stored in state
+    // need to change the state of videoLength to the newly selectedVideo
     this.setState({ selectedVideo }, function() {
       player.loadVideoById(this.state.selectedVideo.id.videoId, 0, "default")
     })
+  }
+
+  setLoopParams(event) {
+    this.setState({
+      loopStart: event[0],
+      loopEnd: event[1],
+      videoLength: player.getDuration()
+    })
+  }
+
+  tooltipFormatter(value) {
+    // need to take into account hour long vids(?)... unless youtube shows timestamp as 123:59
+    var videoMins, videoSecs, videoLength;
+
+    videoMins = Math.floor(value / 60).toString()
+    videoSecs = Math.floor(value % 60).toString()
+    if (videoSecs.toString().length === 1) {
+      videoSecs = "0" + videoSecs;
+    }
+    videoLength = videoMins + ":" + videoSecs
+    return videoLength;
   }
 
   render() {
@@ -88,6 +115,15 @@ class App extends Component {
     return (
       <div>
         <VideoDetail video={this.state.selectedVideo} />
+        <div className="slider-container col-md-8">
+          <Slider
+            range
+            min={0}
+            max={this.state.videoLength}
+            defaultValue={[0, 0]}
+            onChange={event => this.setLoopParams(event)}
+            tipFormatter={this.tooltipFormatter}/>
+        </div>
         <SearchBar onSearchTermChange={videoSearch} />
         <VideoList
           onVideoSelect={selectedVideo => this.changeSelectedVideo(selectedVideo)}
