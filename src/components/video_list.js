@@ -12,7 +12,7 @@ const VideoList = (props) => {
   })
 
   return (
-    <ul className="col-md-4 search-results">
+    <ul className="col-md-6 search-results">
       {videoItems}
     </ul>
   )
