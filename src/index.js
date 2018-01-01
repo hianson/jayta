@@ -45,7 +45,7 @@ class App extends Component {
       YT = window.YT;
 
       if (!self.state.selectedVideo) {
-        console.log('Oops - silly error which fixes with quick reload.')
+        console.log('Loading...')
         window.location.reload();
       }
 
@@ -60,6 +60,8 @@ class App extends Component {
           'onStateChange': onPlayerStateChange
         }
       });
+      var controller = document.getElementById("controller")
+      controller.focus()
     }
 
     function onPlayerReady(event) {
@@ -125,12 +127,53 @@ class App extends Component {
     return videoLength;
   }
 
+  decelVideoSpeed() {
+    var controller = document.getElementById("controller")
+
+    if (player.getPlaybackRate() === 2) {
+      player.setPlaybackRate(1.5)
+    } else {
+      player.setPlaybackRate(player.getPlaybackRate() - .25)
+    }
+    controller.focus()
+  }
+
+  accelVideoSpeed() {
+    var controller = document.getElementById("controller")
+
+    if (player.getPlaybackRate() === 1.5) {
+      player.setPlaybackRate(2)
+    } else {
+      player.setPlaybackRate(player.getPlaybackRate() + .25)
+    }
+    controller.focus()
+  }
+
+  normalizeVideoSpeed() {
+    var controller = document.getElementById("controller")
+
+    player.setPlaybackRate(1)
+    controller.focus()
+  }
+
+  playPauseVideo() {
+    if (player.getPlayerState() === 1){
+      player.pauseVideo();
+    } else {
+      player.playVideo();
+    }
+  }
+
+  handleKeyDown(event) {
+    console.log('handling a key press');
+  }
+
   render() {
     const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 500)
 
     return (
       <div>
-        <VideoContainer video={this.state.selectedVideo} />
+        <VideoContainer video={this.state.selectedVideo} handleKeyDown={() => this.handleKeyDown()} />
         <div className="slider-container col-md-12">
           <Slider
             range
@@ -140,9 +183,12 @@ class App extends Component {
             onAfterChange={event => this.setLoopParams(event)}
             tipFormatter={this.tooltipFormatter}/>
         </div>
-        <div id="description-container">
-          <VideoDescription video={this.state.selectedVideo} />
+        <div className="video-controls">
+          <button id="decel" onClick={this.decelVideoSpeed}>&lt;&lt;</button>
+          <button id="normalize" onClick={this.normalizeVideoSpeed}>Normal Speed</button>
+          <button id="accel" onClick={this.accelVideoSpeed}>&gt;&gt;</button>
         </div>
+        <VideoDescription video={this.state.selectedVideo} />
         <div id="search-container">
           <SearchBar onSearchTermChange={videoSearch} />
           <VideoList
