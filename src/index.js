@@ -90,9 +90,11 @@ class App extends Component {
   }
 
   changeSelectedVideo(selectedVideo) {
+    var controller = document.getElementById("controller")
     this.setState({ selectedVideo }, function() {
       player.loadVideoById(this.state.selectedVideo.id.videoId, 0, "default")
     })
+    controller.focus()
   }
 
   setLoopParams(event) {
@@ -165,7 +167,20 @@ class App extends Component {
   }
 
   handleKeyDown(event) {
-    console.log('handling a key press');
+    event.preventDefault()
+    switch (event.keyCode) {
+    case 37:
+      this.decelVideoSpeed()
+      break;
+    case 39:
+      this.accelVideoSpeed()
+      break;
+    case 32:
+      this.playPauseVideo()
+      break;
+    default:
+      break;
+    }
   }
 
   render() {
@@ -173,7 +188,9 @@ class App extends Component {
 
     return (
       <div>
-        <VideoContainer video={this.state.selectedVideo} handleKeyDown={() => this.handleKeyDown()} />
+        <VideoContainer
+          video={this.state.selectedVideo}
+          handleKeyDown={(event) => this.handleKeyDown(event)} />
         <div className="slider-container col-md-12">
           <Slider
             range
